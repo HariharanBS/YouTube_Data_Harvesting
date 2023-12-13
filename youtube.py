@@ -526,14 +526,14 @@ if st.button("Migrate to SQL Database"):
     Table = tables()
     st.success(Table)
     
-show_table = st.radio("SELECT THE TABLE FOR VIEW",(":green[CHANNELS]",":orange[PLAYLISTS]",":red[VIDEOS]",":blue[COMMENTS]"))
-if show_table == ":green[CHANNELS]":
+show_table = st.radio("SELECT THE TABLE FOR VIEW",(":orange[CHANNELS]",":orange[PLAYLISTS]",":orange[VIDEOS]",":orange[COMMENTS]"))
+if show_table == ":orange[CHANNELS]":
     show_channels_table()
 elif show_table == ":orange[PLAYLISTS]":
     show_playlists_table()
-elif show_table ==":red[VIDEOS]":
+elif show_table ==":orange[VIDEOS]":
     show_videos_table()
-elif show_table == ":blue[COMMENTS]":
+elif show_table == ":orange[COMMENTS]":
     show_comments_table()
     
 #SQL connection
@@ -601,7 +601,7 @@ elif question == "5. Videos with highest likes":
     df4=pd.DataFrame(t5, columns=["video Title","channel Name","like count"])
     st.write(df4)
     
-elif question == "6. likes of all videos":
+elif question == "6. Likes of all videos":
     query6 = '''select Likes as likeCount,Title as VideoTitle from videos;'''
     cursor.execute(query6)
     mydb.commit()
@@ -609,7 +609,7 @@ elif question == "6. likes of all videos":
     df5=pd.DataFrame(t6, columns=["like count","video title"])
     st.write(df5)
     
-elif question == "7. views of each channel":
+elif question == "7. Views of each channel":
     query7 = '''select Channel_Name as ChannelName, Views as Channelviews from channels;'''
     cursor.execute(query7)
     mydb.commit()
@@ -617,7 +617,7 @@ elif question == "7. views of each channel":
     df6=pd.DataFrame(t7, columns=["channel name","total views"])
     st.write(df6)
     
-elif question == "8. videos published in the year 2022":
+elif question == "8. Videos published in the year 2022":
     query8 = '''select Title as Video_Title, Published_Date as VideoRelease, Channel_Name as ChannelName from videos
                 where extract(year from Published_Date) = 2022;'''
     cursor.execute(query8)
@@ -626,7 +626,7 @@ elif question == "8. videos published in the year 2022":
     df7=pd.DataFrame(t8, columns=["Name", "Video Publised On", "ChannelName"])
     st.write(df7)
     
-elif question == "9. average duration of all videos in each channel":
+elif question == "9. Average duration of all videos in each channel":
     query9 = '''SELECT Channel_Name as ChannelName, AVG(Duration) AS average_duration FROM videos GROUP BY Channel_Name;'''
     cursor.execute(query9)
     mydb.commit()
@@ -643,9 +643,9 @@ elif question == "9. average duration of all videos in each channel":
         df9 =pd.DataFrame(T9)
         st.write(df9)
         
-elif question == "10. videos with highest number of comments":
-    query10 = '''select Title as VideoTitle, Channel_Name as ChannelName, Comments as Comments from videos
-                    where Comments is not null order by Comments desc;'''
+elif question == "10. Videos with highest number of comments":
+    query10 = query10 = '''select Title as VideoTitle, Channel_Name as ChannelName, Comments as Comments from videos
+                where Comments is not null order by Comments desc;'''
     cursor.execute(query10)
     mydb.commit()
     t10 = cursor.fetchall()
